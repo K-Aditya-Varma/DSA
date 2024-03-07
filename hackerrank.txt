@@ -1,0 +1,171 @@
+1st:
+bool compare_lists(SinglyLinkedListNode* head1, SinglyLinkedListNode* head2) {
+    int c1 = 0, c2 = 0, flag = 0;
+
+    SinglyLinkedListNode *t1 = head1, *t2 = head2;
+
+    while (t1 != NULL) 
+    {
+        c1++;
+        t1 = t1->next;
+    }
+
+    while (t2 != NULL) 
+    {
+        c2++;
+        t2 = t2->next;
+    }
+
+    if (c1 == c2) 
+    {
+        t1 = head1;
+        t2 = head2;
+
+        while (t1 != NULL && t2 != NULL) 
+        {
+            if (t1->data == t2->data) 
+            {
+                flag = 1;
+            } 
+            else 
+            {
+                flag = 0;
+                break;
+            }
+            t1 = t1->next;
+            t2 = t2->next;
+        }
+    } 
+    else 
+    {
+        flag = 0;
+    }
+
+    if (flag == 1) 
+    {
+        printf("1\n");
+        return true;
+    } 
+    else 
+    {
+        printf("0\n");
+        return false;
+    }
+}
+
+
+2nd:
+SinglyLinkedListNode* reverse(SinglyLinkedListNode* llist) {
+    SinglyLinkedListNode *prev, *current, *next;
+    prev = NULL;
+    current = llist;
+    while (current != NULL) 
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;  
+        current = next;
+    }
+    llist = prev; 
+    return llist;
+}
+
+3rd:
+SinglyLinkedListNode* insertNodeAtPosition(SinglyLinkedListNode* llist, int data, int position) {
+    SinglyLinkedListNode* ptr = (SinglyLinkedListNode*)malloc(sizeof(SinglyLinkedListNode));
+    SinglyLinkedListNode* temp = llist;
+    ptr->data = data;
+    int i = 0;
+    if (position == 0) 
+    {
+        ptr->next = llist;
+        return ptr;
+    }
+    while (i < position - 1) 
+    {
+        temp = temp->next;
+        i++;
+    }
+    ptr->next = temp->next;
+    temp->next = ptr;
+
+    return llist;
+}
+
+4th:
+SinglyLinkedListNode* deleteNode(SinglyLinkedListNode* llist, int position) {
+    SinglyLinkedListNode* temp = llist;
+
+    if (llist == NULL || position < 0) {
+        printf("Deletion not possible");
+        return llist;
+    }
+
+    if (position == 0) {
+        llist = llist->next;
+        free(temp);
+        return llist;
+    }
+
+    int i = 0;
+    while (i < position - 1 && temp->next != NULL) {
+        temp = temp->next;
+        i++;
+    }
+
+    if (temp->next == NULL) {
+        printf("Invalid position. Node not deleted");
+        return llist;
+    }
+
+    SinglyLinkedListNode* ptr = temp->next;
+    temp->next = temp->next->next;
+    free(ptr);
+
+    return llist;
+}
+
+5th:
+bool has_cycle(SinglyLinkedListNode* head) {
+if (head == NULL) {
+        return false; 
+    }
+
+    SinglyLinkedListNode* slow = head;
+    SinglyLinkedListNode* fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;         
+        fast = fast->next->next; 
+
+        if (slow == fast) {
+            return true; 
+        }
+    }
+
+    return false; 
+}
+
+6th:
+SinglyLinkedListNode* removeDuplicates(SinglyLinkedListNode* llist) {
+if (llist == NULL || llist->next == NULL) {
+        return llist;
+    }
+
+    SinglyLinkedListNode* current = llist;
+
+    while (current->next != NULL) 
+    {
+        if (current->data == current->next->data) 
+        {
+            SinglyLinkedListNode* temp = current->next;
+            current->next = current->next->next;
+            free(temp);
+        } 
+        else 
+        {
+            current = current->next;
+        }
+    }
+    return llist;
+}
